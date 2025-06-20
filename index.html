@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuarios desde API</title>
+  <style>
+    /* Estilos básicos para las tarjetas */
+    .contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .tarjeta {
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1rem;
+      width: 250px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .tarjeta h3 {
+      margin-top: 0;
+    }
+
+    .tarjeta p {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Lista de usuarios</h1>
+  <div class="contenedor" id="contenedor-tarjetas">
+    <!-- Aquí se insertarán las tarjetas -->
+  </div>
+
+  <script>
+    const contenedor = document.getElementById('contenedor-tarjetas');
+
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(respuesta => respuesta.json())
+      .then(usuarios => {
+        usuarios.forEach(usuario => {
+          // Creamos el HTML de la tarjeta
+          const tarjeta = document.createElement('div');
+          tarjeta.classList.add('tarjeta');
+
+          tarjeta.innerHTML = `
+            <h3>${usuario.name}</h3>
+            <p><strong>Email:</strong> ${usuario.email}</p>
+            <p><strong>Ciudad:</strong> ${usuario.address.city}</p>
+          `;
+
+          // Agregamos la tarjeta al contenedor
+          contenedor.appendChild(tarjeta);
+        });
+      })
+      .catch(error => {
+        console.error('Error al obtener los usuarios:', error);
+      });
+  </script>
+
+</body>
+</html>
