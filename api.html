@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Api Aletorio</title>
+</head>
+<body>
+    <div id="id-tarjetas">
+        <!-- Aquí se generarán las tarjetas -->
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () =>{
+            fetch('https://randomuser.me/api/?results=10')
+
+            .then(objeto => objeto.json())
+            .then(datos =>{
+                const contenedor = document.getElementById('id-tarjetas');
+
+                datos.results.forEach(funcionflecha => {
+                    const tarjeta = document.createElement('div');
+                    tarjeta.classList.add('tarjeta');
+
+                    const nombre = document.createElement('p');
+                    nombre.textContent = funcionflecha.name.first;
+
+                    tarjeta.appendChild(nombre);
+                    contenedor.appendChild(tarjeta);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

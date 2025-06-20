@@ -1,0 +1,38 @@
+<div id="id-tarjetas">
+  <!-- Aquí se generarán las tarjetas -->
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () =>{
+        fetch('https://www.googleapis.com/books/v1/volumes?q=stevenuniverse&key=AIzaSyBBzU_mgbNRFdncgerZYr7aMh-ksQNz6lk')
+
+        .then(objeto => objeto.json())
+        .then(datos => {
+            const contenedor = document.getElementById('id-tarjetas');
+
+            datos.items.forEach(funcionflecha => {
+                const tarjeta = document.createElement('div');
+                tarjeta.classList.add('tarjeta');
+
+                const informacion = funcionflecha.volumeInfo;
+
+                const titulo = document.createElement('h1');
+                titulo.textContent = informacion.title;
+                titulo.classList.add('titulo');
+
+                const subtitulo = document.createElement('h2');
+                subtitulo.textContent = informacion.subtitle;
+                subtitulo.classList.add('subtitulo');
+
+                const imagen = document.createElement('img');
+                imagen.src = informacion.imageLinks ? informacion.imageLinks.thumbnail : 'https://via.placeholder.com';
+
+                tarjeta.appendChild(imagen);
+                tarjeta.appendChild(titulo);
+                tarjeta.appendChild(subtitulo);
+
+                contenedor.appendChild(tarjeta);
+            });
+        });
+    });
+</script>
