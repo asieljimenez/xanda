@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio</title>
+    
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .contenedor-tarjetas {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: calc(100% - 50px);
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: start;
+            align-content: start;
+            grid-gap: 25px 25px;
+            padding: 25px 25px;
+        }
+        .tarjeta{
+            background-color: #ffffff;
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: start;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0px 0px 10px #00000050;
+            cursor: pointer;
+            transition: 0.25s;
+            padding: 10px 10px;
+        }
+        .titulo-tarjeta{
+            width: calc(100% - 30px);
+            padding: 5px 15px;
+            text-align: center;
+            font-size: clamp(15px, 1.5vw, 20px);
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            background-color: #00000075;
+            color: #ffffff;
+        }
+        .imagen-tarjeta{
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            overflow: hidden;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            padding: 10px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-tarjetas" id="id-contenedor-tarjetas">
+        <!-- Contenedor tarjetas -->
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () =>{
+            
+            fetch('https://www.googleapis.com/books/v1/volumes?q=amor&key=AIzaSyBBzU_mgbNRFdncgerZYr7aMh-ksQNz6lk')
+
+            .then(objeto => objeto.json())
+            .then(datos => {
+                const contenedor = document.getElementById("id-contenedor-tarjetas");
+
+                datos.items.forEach(funcionFlecha => {
+                    const informacion = funcionFlecha.volumeInfo;
+
+                    const tarjeta = document.createElement("div");
+                    tarjeta.classList.add("tarjeta");
+
+                    const titulo = document.createElement("h3");
+                    titulo.textContent = informacion.title;
+                    titulo.classList.add("titulo-tarjeta");
+
+                    const imagen = document.createElement("img");
+                    imagen.src = informacion.imageLinks ? informacion.imageLinks.thumbnail : 'https://via.placeholder.com';
+                    imagen.alt = informacion.title;
+                    imagen.title = informacion.title;
+                    imagen.classList.add("imagen-tarjeta");
+
+                    tarjeta.appendChild(imagen);
+                    tarjeta.appendChild(titulo);
+
+                    contenedor.appendChild(tarjeta);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
